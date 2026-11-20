@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "id": "wallapop",
+  "name": "Wallapop (España)",
+  "version": "2026.11.20",
+  "shadow": true,
+  "settle": 700,
+  "sites": {
+    "wallapop": {"name": "Wallapop", "ads": ["^/item/[^/]+-[0-9]+$"], "origins": ["https://es.wallapop.com"], "start": "https://es.wallapop.com/app/catalog/upload/consumer-goods"}
+  },
+  "limits": {"title": 50, "photos": 10},
+  "inputs": {
+    "title": {"label": "Title (Título)", "hint": "Up to 50 characters; also used as the product summary that opens the form.", "required": true},
+    "photos": {"label": "Photos", "hint": "At least one: Wallapop asks for photos before the other fields.", "required": true},
+    "category": {"label": "Category", "required": true, "hint": "Path as in Wallapop's list, e.g. Deporte y ocio > Montaña y esquí. If Wallapop suggests the last level, it is taken directly."},
+    "description": {"label": "Description (Descripción)", "hint": "Up to 640 characters.", "required": true},
+    "condition": {"label": "Condition (Estado)", "hint": "sealed, new, like new, used, ok, defect (Sin abrir … Lo ha dado todo)."},
+    "price": {"label": "Price (EUR)", "required": true},
+    "shipping": {"label": "Shipping", "hint": "yes or no (Wallapop envíos). Empty: left as it is."},
+    "weight": {"label": "Parcel weight", "hint": "0-1, 1-2, 2-5, 5-10, 10-20 or 20-30 (kg)."}
+  },
+  "never": ["Publicar", "Subir producto", "Destacar", "Pagar", "Eliminar"],
+  "tables": {
+    "condition": {
+      "sealed": "Sin abrir", "new": "Nuevo", "like new": "Como nuevo", "used": "En buen estado", "good": "En buen estado",
+      "ok": "En condiciones aceptables", "defect": "Lo ha dado todo", "defective": "Lo ha dado todo"
+    },
+    "yesNo": {"yes": true, "si": true, "sí": true, "true": true, "no": false, "false": false},
+    "weight": {
+      "0-1": "Delivery Option 0", "1-2": "Delivery Option 1", "2-5": "Delivery Option 2",
+      "5-10": "Delivery Option 3", "10-20": "Delivery Option 4", "20-30": "Delivery Option 5"
+    }
+  },
+  "fields": {
+    "summary": {"title": "Summary", "widget": "text", "locate": {"labels": ["Resumen del producto"], "names": ["summary"]}, "value": {"$input": "title"}},
+    "photos": {"title": "Photos", "widget": "upload", "locate": {"css": "#dropAreaPreviewInput"}, "value": {"$input": "photos"}},
+    "category": {"title": "Category", "widget": "dialog", "path": true, "menu": true, "locate": {"near": ["Categoría y subcategoría"]}, "value": {"$input": "category"}},
+    "title": {"title": "Title", "widget": "text", "locate": {"labels": ["Título"], "names": ["title"]}, "value": {"$input": "title"}},
+    "description": {"title": "Description", "widget": "richtext", "locate": {"labels": ["Descripción"]}, "value": {"$input": "description"}},
+    "condition": {
+      "title": "Estado", "widget": "choice", "optional": true, "if": {"input": "condition"},
+      "locate": {"css": "[role=button][aria-haspopup][aria-label^='Estado']"},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}}
+    },
+    "price": {"title": "Price", "widget": "money", "format": {"fraction": "auto", "decimal": ","}, "locate": {"labels": ["Precio"], "names": ["price_amount"]}, "value": {"$input": "price"}},
+    "shipping": {
+      "title": "Envío", "widget": "toggle", "optional": true, "if": {"input": "shipping", "in": ["yes", "si", "sí", "true", "no", "false"]},
+      "locate": {"css": "input.wallapop-toggle__input"}, "value": {"$lookup": "shipping", "table": "yesNo"}
+    },
+    "weight": {
+      "title": "Parcel weight", "widget": "radio", "optional": true, "if": {"input": "weight"},
+      "locate": {"anywhere": true},
+      "value": {"$lookup": "weight", "table": "weight", "default": {"$input": "weight"}}
+    }
+  },
+  "steps": [
+    {
+      "id": "form",
+      "when": {"field": "summary"},
+      "do": [
+        {"fill": ["summary"]},
+        {"click": "Continuar", "last": true, "unless": {"any": [{"heading": "Fotos"}, {"field": "category"}]}, "until": {"heading": "Fotos"}},
+        {"fill": ["photos"]},
+        {"click": "Continuar", "last": true, "unless": {"field": "category"}, "until": {"field": "category"}, "within": 8000, "timeout": 6000},
+        {"fill": ["category", "title", "description", "condition", "price", "shipping", "weight"]}
+      ]
+    }
+  ]
+}

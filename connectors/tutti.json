@@ -1,0 +1,93 @@
+{
+  "format": 1,
+  "id": "tutti",
+  "name": "tutti.ch / anibis.ch",
+  "version": "2026.11.18",
+  "sites": {
+    "tutti": {"name": "tutti.ch", "origins": ["https://www.tutti.ch", "https://tutti.ch"], "start": "https://www.tutti.ch/de/listings/new"},
+    "anibis": {"name": "anibis.ch", "origins": ["https://www.anibis.ch", "https://anibis.ch"], "start": "https://www.anibis.ch/fr/listings/new"}
+  },
+  "limits": {"title": 60, "photos": 15},
+  "inputs": {
+    "title": {"label": "Title", "hint": "Up to 60 characters.", "required": true},
+    "category": {"label": "Category", "hint": "Path as in the site's category menu, e.g. Sport & Outdoor > Wintersport (anibis in French: Sport & Outdoor > Sports d'hiver).", "required": true},
+    "condition": {"label": "Condition", "hint": "new, used or defective (Neu / Gebraucht / Defekt, Neuf / Occasion …)."},
+    "delivery": {"label": "Delivery", "hint": "shipping (Versand verfügbar: Ja) or pickup (Nein). Empty: left as it is."},
+    "price": {"label": "Price (CHF)", "hint": "0 or free: the Gratis box is ticked instead.", "required": true},
+    "description": {"label": "Description", "hint": "Up to 4000 characters.", "required": true},
+    "postcode": {"label": "Postcode (PLZ / NPA)", "hint": "Only if it should differ from your account's."},
+    "link": {"label": "External link", "hint": "Optional link, e.g. to the product in your shop."},
+    "photos": {"label": "Photos"}
+  },
+  "never": ["Veröffentlichen", "Publier", "Pubblica", "Pubblicare", "Speichern", "Enregistrer", "Salva", "Löschen", "Supprimer", "Elimina", "Bezahlen", "Payer", "Paga"],
+  "tables": {
+    "condition": {
+      "new": "new", "neu": "new", "neuf": "new", "nuovo": "new",
+      "used": "used", "like new": "used", "good": "used", "ok": "used", "gebraucht": "used", "occasion": "used", "d'occasion": "used", "usato": "used",
+      "defect": "defective", "defective": "defective", "defekt": "defective", "défectueux": "defective", "difettoso": "defective"
+    },
+    "delivery": {
+      "shipping": "true", "both": "true", "yes": "true", "ja": "true", "oui": "true", "si": "true", "sì": "true", "versand": "true",
+      "pickup": "false", "no": "false", "nein": "false", "non": "false", "abholung": "false"
+    }
+  },
+  "fields": {
+    "category": {
+      "title": "Category", "widget": "dialog", "path": true, "menu": true,
+      "locate": {"near": ["Kategorie", "Catégorie", "Categoria"]},
+      "value": {"$input": "category"}
+    },
+    "title": {
+      "title": "Title", "widget": "text", "value": {"$input": "title"},
+      "locate": {"labels": ["Titel", "Titre", "Titolo"], "names": ["subject"]}
+    },
+    "condition": {
+      "title": "Condition", "widget": "choice", "optional": true, "if": {"input": "condition"},
+      "locate": {"labels": ["Zustand", "État", "Etat", "Condizione", "Stato"]},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}}
+    },
+    "delivery": {
+      "title": "Shipping available", "widget": "choice", "optional": true, "if": {"input": "delivery"},
+      "locate": {"labels": ["Versand verfügbar", "Envoi disponible", "Livraison possible", "Envoi possible", "Livraison disponible", "Spedizione disponibile", "Spedizione possibile"]},
+      "value": {"$lookup": "delivery", "table": "delivery", "default": {"$input": "delivery"}}
+    },
+    "free": {
+      "title": "Free (Gratis)", "widget": "toggle", "optional": true,
+      "if": {"input": "price", "in": ["0", "0.00", "0.-", "free", "gratis", "gratuit"]},
+      "locate": {"labels": ["Gratis", "Gratuit", "Gratuito"]}, "value": true
+    },
+    "paid": {
+      "title": "Free (Gratis) off", "widget": "toggle", "optional": true,
+      "if": {"not": {"input": "price", "in": ["0", "0.00", "0.-", "free", "gratis", "gratuit"]}},
+      "locate": {"labels": ["Gratis", "Gratuit", "Gratuito"]}, "value": false
+    },
+    "price": {
+      "title": "Price", "widget": "money", "format": {"fraction": "auto"},
+      "if": {"not": {"input": "price", "in": ["0", "0.00", "0.-", "free", "gratis", "gratuit"]}},
+      "locate": {"labels": ["Preis", "Prix", "Prezzo"], "names": ["price"]}, "value": {"$input": "price"}
+    },
+    "description": {
+      "title": "Description", "widget": "richtext",
+      "locate": {"labels": ["Beschreibung", "Description", "Descrizione"], "names": ["body"]}, "value": {"$input": "description"}
+    },
+    "postcode": {
+      "title": "PLZ", "widget": "text", "optional": true, "if": {"input": "postcode"},
+      "locate": {"labels": ["PLZ", "NPA", "CAP"], "names": ["postalcode"]}, "value": {"$input": "postcode"}
+    },
+    "link": {
+      "title": "External link", "widget": "text", "optional": true, "if": {"input": "link"},
+      "locate": {"labels": ["Externer Link", "Lien externe", "Link esterno"], "names": ["externalurl"]}, "value": {"$input": "link"}
+    },
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}}
+  },
+  "steps": [
+    {
+      "id": "form",
+      "when": {"field": "category"},
+      "do": [
+        {"fill": ["category"]},
+        {"fill": ["title", "condition", "delivery", "free", "paid", "price", "description", "postcode", "link", "photos"]}
+      ]
+    }
+  ]
+}

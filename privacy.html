@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Listing Studio privacy policy</title>
+<style>
+  :root { color-scheme: light dark; --text: #162b38; --muted: #536d75; --bg: #f6f8f9; --card: #fff; --line: #d4dfe2; --accent: #14656b; }
+  @media (prefers-color-scheme: dark) { :root { --text: #e3ecee; --muted: #9fb4ba; --bg: #11232a; --card: #183540; --line: #2c4c57; --accent: #6cc3c8; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Arial, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 32px 0 8px; }
+  p, li { margin: 0 0 10px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; background: var(--card); font-size: 15px; }
+  th, td { text-align: left; vertical-align: top; border: 1px solid var(--line); padding: 8px 10px; }
+  @media (max-width: 560px) { table, tbody, tr, th, td { display: block; } tr { border-bottom: 2px solid var(--line); } }
+</style>
+</head>
+<body>
+<main>
+<h1>Listing Studio privacy policy</h1>
+<p class="muted">Last updated 20 November 2026 · applies to the Listing Studio browser extension and its team accounts</p>
+
+<p>Listing Studio is a Chrome extension. It reads product data from your online shop's pages, formats it with your own templates and fills the listing form on a classifieds site. You review the form and publish the ad yourself. This page explains what data the extension handles, where it goes and how to remove it.</p>
+
+<h2>In short</h2>
+<ul>
+  <li>Your drafts, product data, photos, listing history and settings stay in your browser.</li>
+  <li>If you use a team account, your email address and your team's templates and shop sources are stored on the Listing Studio server so that your team can share them.</li>
+  <li>No advertising, no analytics, no selling or sharing of data, no tracking of the sites you visit.</li>
+</ul>
+
+<h2>Data that stays in your browser</h2>
+<p>The extension keeps the following in Chrome's extension storage on your computer. It is not sent to us:</p>
+<ul>
+  <li>product data read from shop pages (title, price, description, sizes, photo addresses) and the drafts you edit;</li>
+  <li>the listing registry: which product you prepared or published on which marketplace, the ad link you saved, the price and stock last seen in the shop;</li>
+  <li>counters, the state of the panel and your settings.</li>
+</ul>
+<p>Uninstalling the extension deletes this data.</p>
+
+<h2>Web pages the extension reads and contacts</h2>
+<ul>
+  <li><strong>Shop pages.</strong> When you ask it to, the extension reads the product page open in your tab and downloads its photos. To tell you when a price or stock changes, it also loads the shop pages of your prepared listings in the background about every 6 hours, without your cookies or sign-ins.</li>
+  <li><strong>Marketplace pages.</strong> When you press Fill form, the extension fills the form open in your tab. For up to 3 hours afterwards it checks the pages loaded in that tab, on that marketplace only, to notice your published ad and save its link in the listing registry. This happens in your browser.</li>
+  <li><strong>Sign-in link.</strong> To finish signing in, the extension recognises the address of the Listing Studio sign-in page when it opens in a tab. It does not record the other pages you visit.</li>
+  <li><strong>Updates.</strong> About every 12 hours the extension downloads the current marketplace rules (form descriptions in JSON, no code) from <a href="https://listingstudioapp.github.io/">our update page</a>, hosted by GitHub Pages. This request carries no personal data.</li>
+</ul>
+
+<h2>Team accounts (optional)</h2>
+<p>You need an account for Fill form. You can read products, write templates and edit drafts without one. When you sign in, the Listing Studio server (a Supabase project in Frankfurt, EU) stores:</p>
+<table>
+  <tr><th>Data</th><th>Why</th></tr>
+  <tr><td>Your email address and account ID</td><td>To sign you in with an emailed link or code</td></tr>
+  <tr><td>Team name, members, invite code, plan and access period (trial or paid)</td><td>To run a team and check whether Fill form may be used. Members of a team see each other's email addresses.</td></tr>
+  <tr><td>A one-way fingerprint (SHA-256) of your email address</td><td>So that each email address gets the free trial only once. It is kept after you delete your account.</td></tr>
+  <tr><td>Your templates and shop sources, only if you turn Sync on</td><td>To share them with your team. A shop source holds the shop address and the page elements to read. A template holds your ad texts and rules.</td></tr>
+</table>
+<p>Drafts, product data, photos, the listing registry and counters are never synced.</p>
+<p>The sign-in email is sent through our email provider. Supabase keeps short-lived technical logs (for example the IP address of a sign-in request) for security.</p>
+
+<h2>Who processes the data</h2>
+<ul>
+  <li>Supabase (database and sign-in, EU region) for team accounts;</li>
+  <li>our email provider, for sign-in emails;</li>
+  <li>GitHub Pages, which hosts the update list and these pages.</li>
+</ul>
+<p>We do not sell your data and do not share it with anyone else. We do not use it for advertising or credit decisions. People outside your team never see it.</p>
+
+<h2>Your choices</h2>
+<ul>
+  <li>Turn Sync off on the Account page: your templates and sources stop going to the server.</li>
+  <li>Leave your team. When the last member leaves, the team and its synced templates and sources are deleted.</li>
+  <li>Delete your account on the Account page: the account and your team membership are removed at once.</li>
+  <li>For access to or deletion of your data, or other questions, write to the email address shown on the Listing Studio page in the Chrome Web Store.</li>
+</ul>
+
+<h2>Changes</h2>
+<p>When this policy changes, the new version is published on this page with a new date.</p>
+</main>
+</body>
+</html>

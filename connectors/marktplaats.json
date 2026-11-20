@@ -1,0 +1,167 @@
+{
+  "format": 1,
+  "id": "marktplaats",
+  "name": "Marktplaats / 2dehands",
+  "version": "2026.11.17",
+  "sites": {
+    "marktplaats": {"name": "Marktplaats", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.marktplaats.nl", "https://marktplaats.nl"], "start": "https://www.marktplaats.nl/plaats"},
+    "2dehands": {"name": "2dehands", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.2dehands.be", "https://2dehands.be"], "start": "https://www.2dehands.be/plaats"}
+  },
+  "limits": {"title": 60, "photos": 24},
+  "inputs": {
+    "title": {"label": "Title", "hint": "Up to 60 characters.", "required": true},
+    "category": {"label": "Category", "hint": "Path through the three lists, e.g. Sport en Fitness > Wintersporten > Skiën en Langlaufen. A single name picks it from Marktplaats' suggestions instead."},
+    "condition": {"label": "Condition", "hint": "new, used, or the Marktplaats wording."},
+    "type": {"label": "Type"},
+    "sort": {"label": "Soort"},
+    "carve": {"label": "Carve", "hint": "true to tick it."},
+    "sizes": {"label": "Sizes / lengths", "hint": "Numbers, e.g. 150; 160. Picks the length range that covers all of them."},
+    "brand": {"label": "Brand"},
+    "price": {"label": "Price (EUR)", "required": true},
+    "delivery": {"label": "Delivery", "hint": "pickup, shipping or both. Empty: shipping when a shipping cost is set, otherwise left to you."},
+    "shipping": {"label": "Shipping cost (EUR)", "hint": "Your own shipping price. Empty: marketplace carriers are left as they are."},
+    "buyerProtection": {"label": "Buyer protection", "hint": "true to switch it on."},
+    "description": {"label": "Description", "required": true},
+    "postcode": {"label": "Postcode", "hint": "Only if the marketplace does not fill it from your account (2dehands left it empty)."},
+    "photos": {"label": "Photos"}
+  },
+  "never": ["Plaats advertentie", "Plaats je advertentie", "Plaats zoekertje", "Plaats je zoekertje", "Publiceren", "Betalen", "Afrekenen", "Bevestigen en betalen"],
+  "tables": {
+    "condition": {"new": "Nieuw", "used": "Gebruikt"},
+    "sort2dehands": {"Skiën": "Ski", "Skien": "Ski"}
+  },
+  "fields": {
+    "title": {
+      "title": "Title", "widget": "text", "value": {"$input": "title"},
+      "locate": {"labels": ["Titel", "Vul een titel in", "Advertentietitel", "Titel van je advertentie", "Titel van je zoekertje"], "names": ["title", "adtitle", "titel", "subject", "keywords"]}
+    },
+    "category1": {
+      "title": "Category", "widget": "choice", "if": {"input": "category", "has": ">"},
+      "locate": {"css": "select[name=cat_sel_1]"}, "value": {"$part": "category", "index": 0}
+    },
+    "category2": {
+      "title": "Subcategory", "widget": "choice", "if": {"input": "category", "has": ">"},
+      "locate": {"css": "select[name=cat_sel_2]"}, "value": {"$part": "category", "index": 1}
+    },
+    "category3": {
+      "title": "Category type", "widget": "choice", "optional": true, "if": {"input": "category", "has": ">"},
+      "locate": {"css": "select[name=cat_sel_3]"}, "value": {"$part": "category", "index": 2}
+    },
+    "category": {
+      "title": "Category", "widget": "radio", "pick": "first", "if": {"not": {"input": "category", "has": ">"}},
+      "whenEmpty": "No category in the template: the category Marktplaats suggested is used. Check it, or set Category in the template.",
+      "locate": {"anywhere": true},
+      "match": {"startsWith": {"$input": "category"}},
+      "ignore": ["(laatst gekozen categorie)"]
+    },
+    "condition": {
+      "title": "Condition", "widget": "choice",
+      "locate": {"labels": ["Conditie", "Staat"], "names": ["condition", "itemcondition"]},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}}
+    },
+    "type": {"title": "Type", "widget": "choice", "optional": true, "locate": {"labels": ["Type"]}, "value": {"$input": "type"}},
+    "sort": {"title": "Soort", "widget": "choice", "optional": true, "locate": {"labels": ["Soort"]}, "value": {"$input": "sort"}},
+    "carve": {
+      "title": "Carve", "widget": "toggle", "optional": true, "if": {"input": "carve", "in": ["true", "yes", "1"]},
+      "locate": {"labels": ["Carve"]}, "value": true
+    },
+    "length": {
+      "title": "Length", "widget": "choice", "optional": true, "if": {"input": "sizes"},
+      "locate": {"labels": ["Lengte ski's", "Lengte skis", "Skilengte", "Lengte", "Lengte (cm)"]},
+      "match": {"rangeCovers": {"$input": "sizes"}}
+    },
+    "brand": {
+      "title": "Brand", "widget": "choice", "optional": true, "acceptText": true,
+      "locate": {"labels": ["Merk"], "names": ["brand"]},
+      "value": {"$input": "brand"}, "fallback": ["Overige merken", "Overige"]
+    },
+    "deliveryShipping": {
+      "title": "Delivery: shipping", "widget": "radio",
+      "if": {"any": [{"input": "delivery", "in": ["shipping", "verzenden"]}, {"all": [{"not": {"input": "delivery"}}, {"input": "shipping"}]}]},
+      "locate": {"group": ["Levering", "Bezorging", "Leveringsmethode", "Verzendmethode", "Verzendopties"]},
+      "match": {"equals": "Verzenden", "exclude": ["ophalen"]}
+    },
+    "deliveryPickup": {
+      "title": "Delivery: pickup", "widget": "radio", "if": {"input": "delivery", "in": ["pickup", "ophalen"]},
+      "locate": {"group": ["Levering", "Bezorging", "Leveringsmethode", "Verzendmethode", "Verzendopties"]},
+      "match": {"equals": "Ophalen", "exclude": ["verzenden"]}
+    },
+    "deliveryBoth": {
+      "title": "Delivery: pickup or shipping", "widget": "radio", "if": {"input": "delivery", "in": ["both", "ophalen of verzenden"]},
+      "locate": {"group": ["Levering", "Bezorging", "Leveringsmethode", "Verzendmethode", "Verzendopties"]},
+      "match": {"equals": "Ophalen of Verzenden"}
+    },
+    "selfShipping": {
+      "title": "Ship it yourself", "widget": "toggle", "optional": true,
+      "if": {"all": [{"input": "shipping"}, {"not": {"input": "delivery", "in": ["pickup", "ophalen"]}}]},
+      "locate": {"labels": ["Zelf verzenden", "Zelf versturen"], "prefix": true}, "value": true
+    },
+    "carriers": {
+      "title": "Marketplace carriers off", "widget": "toggle", "optional": true,
+      "if": {"all": [{"input": "shipping"}, {"not": {"input": "delivery", "in": ["pickup", "ophalen"]}}]},
+      "locate": {"each": ["Budbee", "PostNL", "DHL"]}, "value": false
+    },
+    "buyerProtection": {
+      "title": "Buyer protection", "widget": "toggle", "optional": true, "if": {"input": "buyerProtection", "in": ["true", "yes", "1"]},
+      "locate": {"labels": ["Kopersbescherming", "Kopersbescherming toevoegen"], "prefix": true}, "value": true
+    },
+    "shipping": {
+      "title": "Shipping cost", "widget": "money", "optional": true,
+      "if": {"all": [{"input": "shipping"}, {"not": {"input": "delivery", "in": ["pickup", "ophalen"]}}]},
+      "format": {"decimal": ",", "fraction": 2},
+      "locate": {"labels": ["Verzendkosten", "Verzendkosten in euro", "Verzendkosten (EUR)"], "prefix": true, "names": ["shippingcosts", "shippingcost", "deliverycosts"]},
+      "value": {"$input": "shipping"}
+    },
+    "price": {
+      "title": "Price", "widget": "money", "format": {"decimal": ",", "fraction": 2},
+      "locate": {"labels": ["Prijs", "Vraagprijs", "Prijs in euro", "Prijs (EUR)"], "names": ["price", "askingprice"]},
+      "value": {"$input": "price"}
+    },
+    "description": {
+      "title": "Description", "widget": "richtext",
+      "locate": {"labels": ["Beschrijving", "Omschrijving", "Advertentietekst", "Beschrijving van je advertentie", "Beschrijving van je zoekertje"], "prefix": true, "names": ["description", "body", "omschrijving"]},
+      "value": {"$input": "description"}
+    },
+    "tier": {
+      "title": "Free listing", "widget": "radio", "optional": true,
+      "locate": {"group": ["Hoe wil je adverteren", "Advertentievorm", "Advertentiepakket", "Kies een advertentievorm"]},
+      "match": {"startsWith": "Gratis", "maxPrice": 0, "exclude": ["verzending", "verzenden"]}
+    },
+    "postcode": {
+      "title": "Postcode", "widget": "text", "optional": true, "if": {"input": "postcode"},
+      "locate": {"labels": ["Postcode"], "names": ["contactinformationpostcode", "postcode"]}, "value": {"$input": "postcode"}
+    },
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}}
+  },
+  "variants": {
+    "2dehands": {
+      "fields": {
+        "selfShipping": {"widget": "radio", "locate": {"group": ["Transporteur"]}, "match": {"equals": "Zelf versturen"}},
+        "sort": {"value": {"$lookup": "sort", "table": "sort2dehands", "default": {"$input": "sort"}}}
+      }
+    }
+  },
+  "steps": [
+    {
+      "id": "category",
+      "when": {"any": [{"button": "Vind categorie"}, {"heading": ["Kies een categorie"]}]},
+      "do": [
+        {"fill": ["title", "category1", "category2", "category3"]},
+        {"click": "Vind categorie", "submit": true, "optional": true,
+         "unless": {"any": [{"input": "category", "has": ">"}, {"choice": {"$input": "category"}}]},
+         "until": {"any": [{"choice": {"$input": "category"}}, {"anyChoice": true}]}, "timeout": 5000},
+        {"fill": "category"},
+        {"advance": "Verder", "to": "details"}
+      ]
+    },
+    {
+      "id": "details",
+      "when": {"any": [{"field": "description"}, {"field": "condition"}]},
+      "do": [
+        {"fill": ["title", "condition", "type", "sort", "carve", "length", "brand"]},
+        {"fill": ["deliveryShipping", "deliveryPickup", "deliveryBoth", "selfShipping", "carriers", "buyerProtection", "shipping"]},
+        {"fill": ["price", "description", "postcode", "tier", "photos"]}
+      ]
+    }
+  ]
+}

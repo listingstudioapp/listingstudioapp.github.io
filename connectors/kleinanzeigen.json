@@ -1,0 +1,121 @@
+{
+  "format": 1,
+  "id": "kleinanzeigen",
+  "name": "Kleinanzeigen",
+  "version": "2026.11.18",
+  "sites": {
+    "kleinanzeigen": {"name": "Kleinanzeigen", "ads": ["^/s-anzeige/[^/:]+/[0-9]+-[0-9]+-[0-9]+"], "origins": ["https://www.kleinanzeigen.de", "https://kleinanzeigen.de"], "start": "https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html"}
+  },
+  "limits": {"title": 65, "photos": 20},
+  "inputs": {
+    "title": {"label": "Title", "hint": "Up to 65 characters.", "required": true},
+    "category": {"label": "Category", "hint": "Path, e.g. Sport & Camping > Wintersport. Picked from Kleinanzeigen's suggestions; a full path from the top (Freizeit, Hobby & Nachbarschaft > Sport & Camping > Wintersport) also works without a suggestion. Empty: the first suggestion is used."},
+    "type": {"label": "Art", "hint": "The category's own list, e.g. Wintersport."},
+    "condition": {"label": "Condition", "hint": "new, used, or Neu / Sehr Gut / Gut / In Ordnung / Defekt."},
+    "delivery": {"label": "Delivery", "hint": "shipping (Versand möglich) or pickup (Nur Abholung). Empty: left as it is."},
+    "description": {"label": "Description", "required": true},
+    "price": {"label": "Price (EUR)", "hint": "Whole euros.", "required": true},
+    "priceType": {"label": "Price type", "hint": "fixed (Festpreis), negotiable (VB) or free (Zu verschenken). Empty: left as it is."},
+    "warranty": {"label": "Warranty (months)", "hint": "12 or 24: Gesetzliche Gewährleistung on business (PRO) accounts. Empty: left as it is."},
+    "postcode": {"label": "Postcode (PLZ)", "hint": "Only if your account does not fill it."},
+    "photos": {"label": "Photos"}
+  },
+  "never": ["Anzeige aufgeben", "Entwurf speichern", "Vorschau", "Vorschlag erstellen", "Veröffentlichen", "Bezahlen", "Jetzt kaufen", "Löschen"],
+  "tables": {
+    "condition": {"new": "Neu", "used": "Sehr Gut", "like new": "Sehr Gut", "good": "Gut", "ok": "In Ordnung", "defect": "Defekt"},
+    "delivery": {"shipping": "Versand möglich", "both": "Versand möglich", "versand": "Versand möglich", "pickup": "Nur Abholung", "abholung": "Nur Abholung"},
+    "priceType": {"fixed": "Festpreis", "negotiable": "VB", "vb": "VB", "free": "Zu verschenken"},
+    "warranty": {"12": "12 Monate", "24": "24 Monate", "12 monate": "12 Monate", "24 monate": "24 Monate"}
+  },
+  "fields": {
+    "title": {
+      "title": "Title", "widget": "text", "value": {"$input": "title"},
+      "locate": {"labels": ["Titel"], "names": ["title"]}
+    },
+    "categorySuggestion": {
+      "title": "Category", "widget": "radio", "optional": true, "silent": true, "wait": 3000,
+      "if": {"input": "category"},
+      "locate": {"anywhere": true},
+      "match": {"pathEndsWith": {"$input": "category"}}
+    },
+    "categoryAuto": {
+      "title": "Category", "widget": "toggle", "optional": true, "wait": 6000,
+      "if": {"not": {"input": "category"}},
+      "locate": {"css": "input[name=category-suggestions]", "first": true}, "value": true,
+      "note": "No category in the template: Kleinanzeigen's first suggestion is used. Check it, or set Category in the template."
+    },
+    "categoryTree": {
+      "title": "Category", "widget": "dialog", "path": true,
+      "if": {"all": [{"input": "category"}, {"not": {"pathChecked": {"$input": "category"}}}]},
+      "locate": {"trigger": ["Kategorie ändern", "Wähle deine Kategorie", "Wählen Sie Ihre Kategorie", "Andere Kategorie wählen"]},
+      "value": {"$input": "category"},
+      "ignore": ["öffnet Unterkategorien"],
+      "confirm": ["Übernehmen"]
+    },
+    "type": {
+      "title": "Art", "widget": "choice", "optional": true, "if": {"input": "type"},
+      "locate": {"labels": ["Art"]}, "value": {"$input": "type"}
+    },
+    "condition": {
+      "title": "Condition", "widget": "dialog", "optional": true, "if": {"input": "condition"},
+      "locate": {"trigger": ["Zustand auswählen", "Zustand"]},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}},
+      "confirm": ["Bestätigen", "Übernehmen", "Fertig", "OK"]
+    },
+    "deliveryShipping": {
+      "title": "Versand möglich", "widget": "radio", "optional": true,
+      "if": {"all": [{"input": "delivery", "in": ["shipping", "both", "versand"]}, {"choice": "Versand möglich"}]},
+      "locate": {"anywhere": true}, "match": {"equals": "Versand möglich"}
+    },
+    "deliveryPickup": {
+      "title": "Nur Abholung", "widget": "radio", "optional": true,
+      "if": {"all": [{"input": "delivery", "in": ["pickup", "abholung"]}, {"choice": "Nur Abholung"}]},
+      "locate": {"anywhere": true}, "match": {"equals": "Nur Abholung"}
+    },
+    "deliveryList": {
+      "title": "Versand", "widget": "choice", "optional": true,
+      "if": {"all": [{"input": "delivery", "in": ["shipping", "both", "versand", "pickup", "abholung"]}, {"not": {"choice": "Versand möglich"}}]},
+      "locate": {"labels": ["Versand"]},
+      "value": {"$lookup": "delivery", "table": "delivery"}
+    },
+    "warranty": {
+      "title": "Gewährleistung", "widget": "choice", "optional": true, "if": {"input": "warranty"},
+      "locate": {"labels": ["Gesetzliche Gewährleistung"]},
+      "value": {"$lookup": "warranty", "table": "warranty", "default": {"$input": "warranty"}},
+      "match": {"startsWith": {"$lookup": "warranty", "table": "warranty", "default": {"$input": "warranty"}}}
+    },
+    "description": {
+      "title": "Description", "widget": "richtext",
+      "locate": {"labels": ["Beschreibung"], "names": ["description"]}, "value": {"$input": "description"}
+    },
+    "price": {
+      "title": "Price", "widget": "money", "format": {"fraction": 0},
+      "locate": {"labels": ["Preis"], "names": ["priceamount"]}, "value": {"$input": "price"}
+    },
+    "priceType": {
+      "title": "Price type", "widget": "choice", "optional": true, "if": {"input": "priceType"},
+      "locate": {"labels": ["Preistyp"], "css": "#ad-price-type"},
+      "value": {"$lookup": "priceType", "table": "priceType", "default": {"$input": "priceType"}}
+    },
+    "postcode": {
+      "title": "PLZ", "widget": "text", "optional": true, "if": {"input": "postcode"},
+      "locate": {"labels": ["PLZ"], "names": ["zipcode"]}, "value": {"$input": "postcode"}
+    },
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}}
+  },
+  "steps": [
+    {
+      "id": "form",
+      "when": {"all": [{"field": "title"}, {"field": "description"}]},
+      "do": [
+        {"fill": ["title", "categorySuggestion", "categoryAuto", "categoryTree"]},
+        {"fill": ["type", "condition", "deliveryShipping", "deliveryPickup", "deliveryList"]},
+        {"fill": ["description", "price", "priceType", "warranty", "postcode", "photos"]},
+        {"dismiss": [
+          {"title": "Mach deine Anzeige schnell mit KI", "button": "Anzeige ohne KI erstellen", "timeout": 3000},
+          {"title": "KI-Erstellung weiterhin anbieten", "button": "Schließen", "timeout": 1500}
+        ], "if": {"input": "photos"}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+    "format":  "listing-studio-feed",
+    "version":  1,
+    "connectors":  [
+                       {
+                           "id":  "bazos",
+                           "version":  "2026.11.20",
+                           "file":  "connectors/bazos.json"
+                       },
+                       {
+                           "id":  "kleinanzeigen",
+                           "version":  "2026.11.18",
+                           "file":  "connectors/kleinanzeigen.json"
+                       },
+                       {
+                           "id":  "leboncoin",
+                           "version":  "2026.11.18",
+                           "file":  "connectors/leboncoin.json"
+                       },
+                       {
+                           "id":  "marktplaats",
+                           "version":  "2026.11.17",
+                           "file":  "connectors/marktplaats.json"
+                       },
+                       {
+                           "id":  "sbazar",
+                           "version":  "2026.11.18",
+                           "file":  "connectors/sbazar.json"
+                       },
+                       {
+                           "id":  "tutti",
+                           "version":  "2026.11.18",
+                           "file":  "connectors/tutti.json"
+                       },
+                       {
+                           "id":  "wallapop",
+                           "version":  "2026.11.20",
+                           "file":  "connectors/wallapop.json"
+                       },
+                       {
+                           "id":  "willhaben",
+                           "version":  "2026.11.18",
+                           "file":  "connectors/willhaben.json"
+                       }
+                   ],
+    "templates":  [
+
+                  ]
+}

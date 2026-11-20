@@ -1,0 +1,98 @@
+{
+  "format": 1,
+  "id": "leboncoin",
+  "name": "leboncoin.fr",
+  "version": "2026.11.18",
+  "sites": {
+    "leboncoin": {"name": "leboncoin", "ads": ["^/ad/[^/]+/[0-9]+$"], "origins": ["https://www.leboncoin.fr", "https://leboncoin.fr"], "start": "https://www.leboncoin.fr/deposer-une-annonce"}
+  },
+  "limits": {"title": 100, "photos": 18},
+  "inputs": {
+    "title": {"label": "Title (Titre)", "required": true},
+    "category": {"label": "Category", "hint": "As leboncoin suggests it after the title, e.g. Loisirs > Sport & Plein air. If it is not suggested, choose it on the page and press Fill again.", "required": true},
+    "photos": {"label": "Photos", "hint": "Up to 18."},
+    "universe": {"label": "Univers", "hint": "e.g. Sports d'hiver. Empty: leboncoin's own guess stays."},
+    "activity": {"label": "Activité", "hint": "e.g. Ski."},
+    "product": {"label": "Produit", "hint": "e.g. Matériel."},
+    "brand": {"label": "Marque", "hint": "As in leboncoin's list; an unknown brand stays as leboncoin set it."},
+    "condition": {"label": "État", "hint": "new, like new, used, ok, defect (État neuf … Pour pièces)."},
+    "description": {"label": "Description", "hint": "Up to 4000 characters. Replaces the text leboncoin writes itself.", "required": true},
+    "price": {"label": "Price (EUR)", "hint": "0 or free: Je donne.", "required": true},
+    "place": {"label": "Place", "hint": "Town or postcode as leboncoin suggests it, e.g. Paris (75001). The first suggestion starting with it is chosen."}
+  },
+  "never": ["Publier", "Publier mon annonce", "Déposer mon annonce", "Payer", "Valider et payer", "Supprimer", "Quitter"],
+  "tables": {
+    "condition": {"new": "État neuf", "like new": "Très bon état", "used": "Bon état", "good": "Bon état", "ok": "État satisfaisant", "defect": "Pour pièces", "defective": "Pour pièces"}
+  },
+  "fields": {
+    "titleFirst": {
+      "title": "Title", "widget": "text", "verify": false,
+      "locate": {"labels": ["Quel est le titre de l'annonce"]}, "value": {"$input": "title"}
+    },
+    "category": {
+      "title": "Category", "widget": "radio", "verify": false, "wait": 4000,
+      "whenEmpty": "No category in the template: choose it on the page, then press Fill again.",
+      "locate": {"anywhere": true},
+      "match": {"equals": {"$part": "category", "index": -1}}
+    },
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}},
+    "universe": {"title": "Univers", "widget": "choice", "optional": true, "verify": false, "if": {"input": "universe"}, "locate": {"labels": ["Univers"]}, "value": {"$input": "universe"}},
+    "activity": {"title": "Activité", "widget": "choice", "optional": true, "verify": false, "if": {"input": "activity"}, "locate": {"labels": ["Activité"]}, "value": {"$input": "activity"}},
+    "product": {"title": "Produit", "widget": "choice", "optional": true, "verify": false, "if": {"input": "product"}, "locate": {"labels": ["Produit"]}, "value": {"$input": "product"}},
+    "brand": {"title": "Marque", "widget": "choice", "optional": true, "verify": false, "if": {"input": "brand"}, "locate": {"labels": ["Marque"]}, "value": {"$input": "brand"}},
+    "condition": {
+      "title": "État", "widget": "choice", "optional": true, "verify": false, "if": {"input": "condition"},
+      "locate": {"labels": ["État"]},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}}
+    },
+    "title": {"title": "Title", "widget": "text", "locate": {"labels": ["Titre de l'annonce"]}, "value": {"$input": "title"}},
+    "description": {"title": "Description", "widget": "richtext", "locate": {"labels": ["Description de l'annonce"], "names": ["body"]}, "value": {"$input": "description"}},
+    "sell": {
+      "title": "Je vends", "widget": "radio", "optional": true,
+      "if": {"not": {"input": "price", "in": ["0", "free", "gratuit"]}},
+      "locate": {"anywhere": true}, "match": {"equals": "Je vends"}
+    },
+    "give": {
+      "title": "Je donne", "widget": "radio", "optional": true,
+      "if": {"input": "price", "in": ["0", "free", "gratuit"]},
+      "locate": {"anywhere": true}, "match": {"equals": "Je donne"}
+    },
+    "price": {
+      "title": "Price", "widget": "money", "format": {"fraction": "auto"},
+      "if": {"not": {"input": "price", "in": ["0", "free", "gratuit"]}},
+      "locate": {"labels": ["Prix de vente souhaité"], "names": ["price_cents"]}, "value": {"$input": "price"}
+    },
+    "place": {"title": "Place", "widget": "suggest", "optional": true, "if": {"input": "place"}, "locate": {"labels": ["Location", "Adresse"], "names": ["location"]}, "value": {"$input": "place"}}
+  },
+  "steps": [
+    {
+      "id": "start",
+      "when": {"field": "titleFirst"},
+      "do": [
+        {"fill": ["titleFirst", "category"]},
+        {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 2500, "quiet": true},
+        {"click": "Continuer", "submit": true, "optional": true, "unless": {"heading": "Dites-nous en plus sur votre article"}, "until": {"heading": "Dites-nous en plus sur votre article"}},
+        {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 5000},
+        {"fill": ["photos", "universe", "activity", "product", "brand", "condition"]},
+        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000},
+        {"fill": ["title", "description", "sell", "give", "price", "place"]}
+      ]
+    },
+    {
+      "id": "details",
+      "when": {"heading": "Dites-nous en plus sur votre article"},
+      "do": [
+        {"fill": ["photos", "universe", "activity", "product", "brand", "condition"]},
+        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000},
+        {"fill": ["title", "description", "sell", "give", "price", "place"]}
+      ]
+    },
+    {
+      "id": "overview",
+      "when": {"heading": "Un dernier aperçu avant de publier votre annonce"},
+      "do": [
+        {"fill": ["title", "description", "sell", "give", "price", "place"]}
+      ]
+    }
+  ]
+}

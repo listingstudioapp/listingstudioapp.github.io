@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "id": "sbazar",
+  "name": "Sbazar.cz",
+  "version": "2026.11.18",
+  "sites": {
+    "sbazar": {"name": "Sbazar.cz", "origins": ["https://www.sbazar.cz", "https://sbazar.cz"], "start": "https://www.sbazar.cz/nova-nabidka"}
+  },
+  "limits": {"title": 50},
+  "inputs": {
+    "title": {"label": "Title (Název)", "hint": "Up to 50 characters.", "required": true},
+    "category": {"label": "Category", "hint": "Path as in the category window, e.g. Sport > Zimní sporty > Lyže.", "required": true},
+    "description": {"label": "Description (Popis)", "hint": "Up to 2000 characters.", "required": true},
+    "price": {"label": "Price (Kč)", "hint": "0 or free: the Zdarma box. Empty with price type negotiable: Dohodou."},
+    "priceType": {"label": "Price type", "hint": "negotiable (Dohodou). Empty: a fixed price."},
+    "place": {"label": "Place (Místo)", "hint": "Town as Sbazar suggests it, e.g. Brno or Ostrava. The first suggestion starting with it is chosen."},
+    "phone": {"label": "Phone", "hint": "Only if it should differ from your Seznam account's."},
+    "photos": {"label": "Photos"}
+  },
+  "never": ["Zveřejnit", "Zpět", "Uložit", "Smazat", "Topovat", "Zaplatit"],
+  "fields": {
+    "title": {"title": "Title", "widget": "text", "locate": {"labels": ["Název"], "names": ["name"]}, "value": {"$input": "title"}},
+    "category": {
+      "title": "Category", "widget": "dialog", "path": true, "counts": true,
+      "locate": {"near": ["Kategorie"]},
+      "value": {"$input": "category"},
+      "cancel": ["Zavřít", "Close"]
+    },
+    "description": {"title": "Description", "widget": "richtext", "locate": {"labels": ["Popis"], "names": ["description"]}, "value": {"$input": "description"}},
+    "free": {
+      "title": "Zdarma", "widget": "toggle", "optional": true,
+      "if": {"input": "price", "in": ["0", "free", "zdarma"]},
+      "locate": {"labels": ["Zdarma"]}, "value": true
+    },
+    "agreement": {
+      "title": "Dohodou", "widget": "toggle", "optional": true,
+      "if": {"input": "priceType", "in": ["negotiable", "dohodou", "agreement"]},
+      "locate": {"labels": ["Dohodou"]}, "value": true
+    },
+    "price": {
+      "title": "Price", "widget": "money", "format": {"fraction": "auto"}, "optional": true,
+      "if": {"all": [{"input": "price"}, {"not": {"input": "price", "in": ["0", "free", "zdarma"]}}, {"not": {"input": "priceType", "in": ["negotiable", "dohodou", "agreement"]}}]},
+      "locate": {"labels": ["Cena"], "names": ["price"]}, "value": {"$input": "price"}
+    },
+    "place": {
+      "title": "Place", "widget": "suggest", "optional": true, "if": {"input": "place"},
+      "locate": {"labels": ["Místo"], "names": ["locality"]}, "value": {"$input": "place"}
+    },
+    "phone": {"title": "Phone", "widget": "text", "optional": true, "if": {"input": "phone"}, "locate": {"css": "input[name=phone]"}, "value": {"$input": "phone"}},
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}}
+  },
+  "steps": [
+    {
+      "id": "form",
+      "when": {"field": "title"},
+      "do": [
+        {"fill": ["title", "category", "description", "free", "agreement", "price", "place", "phone", "photos"]}
+      ]
+    }
+  ]
+}

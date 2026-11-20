@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "id": "bazos",
+  "name": "Bazoš.sk / Bazoš.cz",
+  "version": "2026.11.20",
+  "sites": {
+    "bazos-sk": {"name": "Bazoš.sk", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.sk/pridat-inzerat.php", "origins": [
+      "https://www.bazos.sk", "https://bazos.sk",
+      "https://auto.bazos.sk", "https://deti.bazos.sk", "https://dom.bazos.sk", "https://elektro.bazos.sk", "https://foto.bazos.sk",
+      "https://hudba.bazos.sk", "https://knihy.bazos.sk", "https://mobil.bazos.sk", "https://motocykle.bazos.sk", "https://nabytok.bazos.sk",
+      "https://oblecenie.bazos.sk", "https://pc.bazos.sk", "https://praca.bazos.sk", "https://reality.bazos.sk", "https://sluzby.bazos.sk",
+      "https://stroje.bazos.sk", "https://sport.bazos.sk", "https://vstupenky.bazos.sk", "https://zvierata.bazos.sk", "https://ostatne.bazos.sk"]},
+    "bazos-cz": {"name": "Bazoš.cz", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.cz/pridat-inzerat.php", "origins": [
+      "https://www.bazos.cz", "https://bazos.cz",
+      "https://auto.bazos.cz", "https://deti.bazos.cz", "https://dum.bazos.cz", "https://elektro.bazos.cz", "https://foto.bazos.cz",
+      "https://hudba.bazos.cz", "https://knihy.bazos.cz", "https://mobil.bazos.cz", "https://motorky.bazos.cz", "https://nabytek.bazos.cz",
+      "https://obleceni.bazos.cz", "https://pc.bazos.cz", "https://prace.bazos.cz", "https://reality.bazos.cz", "https://sluzby.bazos.cz",
+      "https://stroje.bazos.cz", "https://sport.bazos.cz", "https://vstupenky.bazos.cz", "https://zvirata.bazos.cz", "https://ostatni.bazos.cz"]}
+  },
+  "limits": {"title": 60, "photos": 20},
+  "inputs": {
+    "title": {"label": "Title", "hint": "Up to 60 characters.", "required": true},
+    "category": {"label": "Category", "hint": "Section > category as on the form, e.g. Šport > Lyžovanie (Bazoš.cz: Sport > Lyžování). Only the category: the section stays as opened.", "required": true},
+    "description": {"label": "Text", "hint": "Up to 3000 characters.", "required": true},
+    "price": {"label": "Price", "hint": "In € (Bazoš.sk) or Kč (Bazoš.cz). 0 or free: Zadarmo / Zdarma."},
+    "priceType": {"label": "Price type", "hint": "Instead of or next to a price: negotiable (Dohodou), offer (Ponúknite / Nabídněte), any (Nerozhoduje), text (V texte / V textu), free."},
+    "postcode": {"label": "PSČ", "hint": "Five digits, e.g. 81101."},
+    "name": {"label": "Name", "hint": "Contact name shown in the ad."},
+    "phone": {"label": "Phone", "hint": "Must be the phone number verified on Bazoš."},
+    "email": {"label": "E-mail"},
+    "password": {"label": "Ad password", "hint": "Bazoš asks for a password to edit or delete the ad later. Leave empty to type it yourself."},
+    "photos": {"label": "Photos"}
+  },
+  "never": ["Odoslať", "Odeslat", "Vyplniť inzerát pomocou AI", "Vyplnit inzerát pomocí AI", "Topovať", "Topovat", "Zmazať", "Smazat"],
+  "tables": {
+    "priceType": {
+      "negotiable": ["Dohodou"], "dohodou": ["Dohodou"],
+      "offer": ["Ponúknite", "Nabídněte"], "any": ["Nerozhoduje"],
+      "text": ["V texte", "V textu"], "free": ["Zadarmo", "Zdarma"]
+    }
+  },
+  "fields": {
+    "section": {
+      "title": "Section (Rubrika)", "widget": "choice", "reloads": true,
+      "if": {"input": "category", "has": ">"},
+      "locate": {"css": "select[name=rubrikyvybrat]"},
+      "value": {"$part": "category", "index": 0}
+    },
+    "category": {
+      "title": "Category", "widget": "choice",
+      "locate": {"css": "#category"},
+      "value": {"$part": "category", "index": -1}
+    },
+    "title": {"title": "Title", "widget": "text", "locate": {"css": "#nadpis"}, "value": {"$input": "title"}},
+    "description": {"title": "Text", "widget": "richtext", "locate": {"css": "#popis"}, "value": {"$input": "description"}},
+    "price": {
+      "title": "Price", "widget": "money", "format": {"fraction": "auto"}, "optional": true,
+      "if": {"all": [{"input": "price"}, {"not": {"input": "price", "in": ["0", "free", "zadarmo", "zdarma"]}}]},
+      "locate": {"css": "#cena"}, "value": {"$input": "price"}
+    },
+    "priceFree": {
+      "title": "Price: free", "widget": "choice", "optional": true,
+      "if": {"input": "price", "in": ["0", "free", "zadarmo", "zdarma"]},
+      "locate": {"css": "#cenavyber"}, "value": ["Zadarmo", "Zdarma"]
+    },
+    "priceType": {
+      "title": "Price type", "widget": "choice", "optional": true,
+      "if": {"all": [{"input": "priceType"}, {"not": {"input": "price", "in": ["0", "free", "zadarmo", "zdarma"]}}]},
+      "locate": {"css": "#cenavyber"},
+      "value": {"$lookup": "priceType", "table": "priceType", "default": {"$input": "priceType"}}
+    },
+    "postcode": {"title": "PSČ", "widget": "text", "optional": true, "if": {"input": "postcode"}, "locate": {"css": "#lokalita"}, "value": {"$input": "postcode"}},
+    "name": {"title": "Name", "widget": "text", "optional": true, "if": {"input": "name"}, "locate": {"css": "#jmeno"}, "value": {"$input": "name"}},
+    "phone": {"title": "Phone", "widget": "text", "optional": true, "if": {"input": "phone"}, "locate": {"css": "#telefoni"}, "value": {"$input": "phone"}},
+    "email": {"title": "E-mail", "widget": "text", "optional": true, "if": {"input": "email"}, "locate": {"css": "#maili"}, "value": {"$input": "email"}},
+    "password": {"title": "Ad password", "widget": "text", "optional": true, "if": {"input": "password"}, "locate": {"css": "#heslobazar"}, "value": {"$input": "password"}},
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"fileInput": true}, "value": {"$input": "photos"}}
+  },
+  "steps": [
+    {
+      "id": "form",
+      "when": {"field": "title"},
+      "do": [
+        {"fill": ["section"]},
+        {"fill": ["category", "title", "description", "price", "priceFree", "priceType", "postcode", "name", "phone", "email", "password", "photos"]}
+      ]
+    }
+  ]
+}
