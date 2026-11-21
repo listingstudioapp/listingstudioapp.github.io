@@ -1,0 +1,35 @@
+{
+ "format": "listing-studio-template",
+ "version": 1,
+ "description": "Wallapop (es.wallapop.com) in Spanish: title with sizes (50 characters), description (640 characters), price, condition and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again.",
+ "template": {
+  "name": "Wallapop (any shop)",
+  "url": "https://es.wallapop.com/app/catalog/upload/consumer-goods",
+  "path": "/*",
+  "bindings": [],
+  "connectorId": "wallapop",
+  "shipping": "",
+  "ready": true,
+  "inputs": {
+   "title": {"mode": "template", "value": "{{title|fit:50}}{{#sizes}}, talla {{sizes|join:/|fit:50}}{{/sizes}}"},
+   "photos": {"mode": "field", "value": "photos"},
+   "description": {"mode": "template", "value": "{{title}}{{#brand}}\nMarca: {{brand}}{{/brand}}{{#sizes}}\nTallas: {{sizes}}{{/sizes}}{{#description}}\n\n{{description|fit:640|sentences}}{{/description}}"},
+   "condition": {"mode": "field", "value": "condition"},
+   "price": {"mode": "field", "value": "price"}
+  }
+ },
+ "source": {
+  "name": "Any shop (automatic)",
+  "anyShop": true,
+  "path": "/*",
+  "fields": [
+   {"id": "f-title", "name": "title", "type": "auto", "key": "title"},
+   {"id": "f-price", "name": "price", "type": "auto", "key": "price"},
+   {"id": "f-description", "name": "description", "type": "auto", "key": "description", "optional": true},
+   {"id": "f-brand", "name": "brand", "type": "auto", "key": "brand", "optional": true},
+   {"id": "f-sizes", "name": "sizes", "type": "auto", "key": "sizes", "optional": true},
+   {"id": "f-condition", "name": "condition", "type": "auto", "key": "condition", "optional": true},
+   {"id": "f-photos", "name": "photos", "type": "auto", "key": "photos"}
+  ]
+ }
+}

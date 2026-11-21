@@ -1,0 +1,36 @@
+{
+ "format": "listing-studio-template",
+ "version": 1,
+ "description": "Marktplaats.nl in Dutch: title with sizes (60 characters), description, price, brand, condition and photos read from any shop that publishes its product data. Category: Marktplaats' suggestion, or set it in the template.",
+ "template": {
+  "name": "Marktplaats (any shop)",
+  "url": "https://www.marktplaats.nl/plaats",
+  "path": "/*",
+  "bindings": [],
+  "connectorId": "marktplaats",
+  "shipping": "",
+  "ready": true,
+  "inputs": {
+   "title": {"mode": "template", "value": "{{title|fit:60}}{{#sizes}}, maat {{sizes|join:/|fit:60}}{{/sizes}}"},
+   "condition": {"mode": "field", "value": "condition"},
+   "brand": {"mode": "field", "value": "brand"},
+   "price": {"mode": "field", "value": "price"},
+   "description": {"mode": "template", "value": "{{title}}{{#brand}}\nMerk: {{brand}}{{/brand}}{{#sizes}}\nMaten: {{sizes}}{{/sizes}}{{#condition=new}}\nStaat: nieuw{{/condition}}{{#condition=used}}\nStaat: gebruikt{{/condition}}{{#description}}\n\n{{description|fit:4000|sentences}}{{/description}}"},
+   "photos": {"mode": "field", "value": "photos"}
+  }
+ },
+ "source": {
+  "name": "Any shop (automatic)",
+  "anyShop": true,
+  "path": "/*",
+  "fields": [
+   {"id": "f-title", "name": "title", "type": "auto", "key": "title"},
+   {"id": "f-price", "name": "price", "type": "auto", "key": "price"},
+   {"id": "f-description", "name": "description", "type": "auto", "key": "description", "optional": true},
+   {"id": "f-brand", "name": "brand", "type": "auto", "key": "brand", "optional": true},
+   {"id": "f-sizes", "name": "sizes", "type": "auto", "key": "sizes", "optional": true},
+   {"id": "f-condition", "name": "condition", "type": "auto", "key": "condition", "optional": true},
+   {"id": "f-photos", "name": "photos", "type": "auto", "key": "photos"}
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "format": "listing-studio-template",
+ "version": 1,
+ "description": "anibis.ch in French: title with sizes (60 characters), description, price in CHF, condition, a link to the product page and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again.",
+ "template": {
+  "name": "anibis.ch (any shop)",
+  "url": "https://www.anibis.ch/fr/listings/new",
+  "path": "/*",
+  "bindings": [],
+  "connectorId": "tutti",
+  "shipping": "",
+  "ready": true,
+  "inputs": {
+   "title": {"mode": "template", "value": "{{title|fit:60}}{{#sizes}}, taille {{sizes|join:/|fit:60}}{{/sizes}}"},
+   "condition": {"mode": "field", "value": "condition"},
+   "price": {"mode": "field", "value": "price"},
+   "description": {"mode": "template", "value": "{{title}}{{#brand}}\nMarque : {{brand}}{{/brand}}{{#sizes}}\nTailles : {{sizes}}{{/sizes}}{{#condition=new}}\nÉtat : neuf{{/condition}}{{#condition=used}}\nÉtat : occasion{{/condition}}{{#description}}\n\n{{description|fit:4000|sentences}}{{/description}}"},
+   "link": {"mode": "template", "value": "{{url}}"},
+   "photos": {"mode": "field", "value": "photos"}
+  }
+ },
+ "source": {
+  "name": "Any shop (automatic)",
+  "anyShop": true,
+  "path": "/*",
+  "fields": [
+   {"id": "f-title", "name": "title", "type": "auto", "key": "title"},
+   {"id": "f-price", "name": "price", "type": "auto", "key": "price"},
+   {"id": "f-description", "name": "description", "type": "auto", "key": "description", "optional": true},
+   {"id": "f-brand", "name": "brand", "type": "auto", "key": "brand", "optional": true},
+   {"id": "f-sizes", "name": "sizes", "type": "auto", "key": "sizes", "optional": true},
+   {"id": "f-condition", "name": "condition", "type": "auto", "key": "condition", "optional": true},
+   {"id": "f-photos", "name": "photos", "type": "auto", "key": "photos"}
+  ]
+ }
+}

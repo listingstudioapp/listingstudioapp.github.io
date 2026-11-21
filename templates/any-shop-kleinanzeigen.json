@@ -1,0 +1,35 @@
+{
+ "format": "listing-studio-template",
+ "version": 1,
+ "description": "Kleinanzeigen.de in German: title with sizes (65 characters), description, price in whole euros, condition and photos read from any shop that publishes its product data. Category: Kleinanzeigen's first suggestion, or set it in the template.",
+ "template": {
+  "name": "Kleinanzeigen (any shop)",
+  "url": "https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html",
+  "path": "/*",
+  "bindings": [],
+  "connectorId": "kleinanzeigen",
+  "shipping": "",
+  "ready": true,
+  "inputs": {
+   "title": {"mode": "template", "value": "{{title|fit:65}}{{#sizes}}, Gr. {{sizes|join:/|fit:65}}{{/sizes}}"},
+   "condition": {"mode": "field", "value": "condition"},
+   "price": {"mode": "field", "value": "price"},
+   "description": {"mode": "template", "value": "{{title}}{{#brand}}\nMarke: {{brand}}{{/brand}}{{#sizes}}\nGrößen: {{sizes}}{{/sizes}}{{#condition=new}}\nZustand: neu{{/condition}}{{#condition=used}}\nZustand: gebraucht{{/condition}}{{#description}}\n\n{{description|fit:4000|sentences}}{{/description}}"},
+   "photos": {"mode": "field", "value": "photos"}
+  }
+ },
+ "source": {
+  "name": "Any shop (automatic)",
+  "anyShop": true,
+  "path": "/*",
+  "fields": [
+   {"id": "f-title", "name": "title", "type": "auto", "key": "title"},
+   {"id": "f-price", "name": "price", "type": "auto", "key": "price"},
+   {"id": "f-description", "name": "description", "type": "auto", "key": "description", "optional": true},
+   {"id": "f-brand", "name": "brand", "type": "auto", "key": "brand", "optional": true},
+   {"id": "f-sizes", "name": "sizes", "type": "auto", "key": "sizes", "optional": true},
+   {"id": "f-condition", "name": "condition", "type": "auto", "key": "condition", "optional": true},
+   {"id": "f-photos", "name": "photos", "type": "auto", "key": "photos"}
+  ]
+ }
+}
