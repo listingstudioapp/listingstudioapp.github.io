@@ -2,15 +2,15 @@
   "format": 1,
   "id": "bazos",
   "name": "Bazoš.sk / Bazoš.cz",
-  "version": "2026.11.20",
+  "version": "2026.11.21.1",
   "sites": {
-    "bazos-sk": {"name": "Bazoš.sk", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.sk/pridat-inzerat.php", "origins": [
+    "bazos-sk": {"name": "Bazoš.sk", "currency": "EUR", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.sk/pridat-inzerat.php", "origins": [
       "https://www.bazos.sk", "https://bazos.sk",
       "https://auto.bazos.sk", "https://deti.bazos.sk", "https://dom.bazos.sk", "https://elektro.bazos.sk", "https://foto.bazos.sk",
       "https://hudba.bazos.sk", "https://knihy.bazos.sk", "https://mobil.bazos.sk", "https://motocykle.bazos.sk", "https://nabytok.bazos.sk",
       "https://oblecenie.bazos.sk", "https://pc.bazos.sk", "https://praca.bazos.sk", "https://reality.bazos.sk", "https://sluzby.bazos.sk",
       "https://stroje.bazos.sk", "https://sport.bazos.sk", "https://vstupenky.bazos.sk", "https://zvierata.bazos.sk", "https://ostatne.bazos.sk"]},
-    "bazos-cz": {"name": "Bazoš.cz", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.cz/pridat-inzerat.php", "origins": [
+    "bazos-cz": {"name": "Bazoš.cz", "currency": "CZK", "ads": ["^/inzerat/[0-9]+/"], "start": "https://www.bazos.cz/pridat-inzerat.php", "origins": [
       "https://www.bazos.cz", "https://bazos.cz",
       "https://auto.bazos.cz", "https://deti.bazos.cz", "https://dum.bazos.cz", "https://elektro.bazos.cz", "https://foto.bazos.cz",
       "https://hudba.bazos.cz", "https://knihy.bazos.cz", "https://mobil.bazos.cz", "https://motorky.bazos.cz", "https://nabytek.bazos.cz",
@@ -22,7 +22,7 @@
     "title": {"label": "Title", "hint": "Up to 60 characters.", "required": true},
     "category": {"label": "Category", "hint": "Section > category as on the form, e.g. Šport > Lyžovanie (Bazoš.cz: Sport > Lyžování). Only the category: the section stays as opened.", "required": true},
     "description": {"label": "Text", "hint": "Up to 3000 characters.", "required": true},
-    "price": {"label": "Price", "hint": "In € (Bazoš.sk) or Kč (Bazoš.cz). 0 or free: Zadarmo / Zdarma."},
+    "price": {"label": "Price", "hint": "In € (Bazoš.sk) or Kč (Bazoš.cz). 0 or free: Zadarmo / Zdarma.", "money": true},
     "priceType": {"label": "Price type", "hint": "Instead of or next to a price: negotiable (Dohodou), offer (Ponúknite / Nabídněte), any (Nerozhoduje), text (V texte / V textu), free."},
     "postcode": {"label": "PSČ", "hint": "Five digits, e.g. 81101."},
     "name": {"label": "Name", "hint": "Contact name shown in the ad."},

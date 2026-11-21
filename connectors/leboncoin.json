@@ -2,9 +2,9 @@
   "format": 1,
   "id": "leboncoin",
   "name": "leboncoin.fr",
-  "version": "2026.11.18",
+  "version": "2026.11.21.1",
   "sites": {
-    "leboncoin": {"name": "leboncoin", "ads": ["^/ad/[^/]+/[0-9]+$"], "origins": ["https://www.leboncoin.fr", "https://leboncoin.fr"], "start": "https://www.leboncoin.fr/deposer-une-annonce"}
+    "leboncoin": {"name": "leboncoin", "currency": "EUR", "ads": ["^/ad/[^/]+/[0-9]+$"], "origins": ["https://www.leboncoin.fr", "https://leboncoin.fr"], "start": "https://www.leboncoin.fr/deposer-une-annonce"}
   },
   "limits": {"title": 100, "photos": 18},
   "inputs": {
@@ -17,7 +17,7 @@
     "brand": {"label": "Marque", "hint": "As in leboncoin's list; an unknown brand stays as leboncoin set it."},
     "condition": {"label": "État", "hint": "new, like new, used, ok, defect (État neuf … Pour pièces)."},
     "description": {"label": "Description", "hint": "Up to 4000 characters. Replaces the text leboncoin writes itself.", "required": true},
-    "price": {"label": "Price (EUR)", "hint": "0 or free: Je donne.", "required": true},
+    "price": {"label": "Price (EUR)", "hint": "0 or free: Je donne.", "required": true, "money": true},
     "place": {"label": "Place", "hint": "Town or postcode as leboncoin suggests it, e.g. Paris (75001). The first suggestion starting with it is chosen."}
   },
   "never": ["Publier", "Publier mon annonce", "Déposer mon annonce", "Payer", "Valider et payer", "Supprimer", "Quitter"],

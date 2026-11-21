@@ -2,9 +2,9 @@
   "format": 1,
   "id": "kleinanzeigen",
   "name": "Kleinanzeigen",
-  "version": "2026.11.18",
+  "version": "2026.11.21.1",
   "sites": {
-    "kleinanzeigen": {"name": "Kleinanzeigen", "ads": ["^/s-anzeige/[^/:]+/[0-9]+-[0-9]+-[0-9]+"], "origins": ["https://www.kleinanzeigen.de", "https://kleinanzeigen.de"], "start": "https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html"}
+    "kleinanzeigen": {"name": "Kleinanzeigen", "currency": "EUR", "ads": ["^/s-anzeige/[^/:]+/[0-9]+-[0-9]+-[0-9]+"], "origins": ["https://www.kleinanzeigen.de", "https://kleinanzeigen.de"], "start": "https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html"}
   },
   "limits": {"title": 65, "photos": 20},
   "inputs": {
@@ -14,7 +14,7 @@
     "condition": {"label": "Condition", "hint": "new, used, or Neu / Sehr Gut / Gut / In Ordnung / Defekt."},
     "delivery": {"label": "Delivery", "hint": "shipping (Versand möglich) or pickup (Nur Abholung). Empty: left as it is."},
     "description": {"label": "Description", "required": true},
-    "price": {"label": "Price (EUR)", "hint": "Whole euros.", "required": true},
+    "price": {"label": "Price (EUR)", "hint": "Whole euros.", "required": true, "money": true},
     "priceType": {"label": "Price type", "hint": "fixed (Festpreis), negotiable (VB) or free (Zu verschenken). Empty: left as it is."},
     "warranty": {"label": "Warranty (months)", "hint": "12 or 24: Gesetzliche Gewährleistung on business (PRO) accounts. Empty: left as it is."},
     "postcode": {"label": "Postcode (PLZ)", "hint": "Only if your account does not fill it."},

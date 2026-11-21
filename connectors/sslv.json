@@ -2,10 +2,10 @@
   "format": 1,
   "id": "sslv",
   "name": "SS.lv",
-  "version": "2026.11.21",
+  "version": "2026.11.21.1",
   "engine": "0.30.0",
   "sites": {
-    "ss-lv": {"name": "SS.lv", "ads": ["^/msg/"], "start": "https://www.ss.lv/ru/new/", "origins": ["https://www.ss.lv", "https://ss.lv"]}
+    "ss-lv": {"name": "SS.lv", "currency": "EUR", "ads": ["^/msg/"], "start": "https://www.ss.lv/ru/new/", "origins": ["https://www.ss.lv", "https://ss.lv"]}
   },
   "limits": {"brand": 14, "model": 14, "photos": 10},
   "inputs": {
@@ -18,7 +18,7 @@
     "year": {"label": "Year", "hint": "Four digits."},
     "length": {"label": "Length", "hint": "A number, e.g. 160."},
     "condition": {"label": "Condition", "hint": "new or used."},
-    "price": {"label": "Price", "hint": "In €, the final price."},
+    "price": {"label": "Price", "hint": "In €, the final price.", "money": true},
     "photos": {"label": "Photos", "hint": "Up to 10. Photos of the item itself: SS.lv removes catalogue pictures and logos."}
   },
   "never": ["Продолжить >>", "Продолжить", "Turpināt >>", "Turpināt", "Платное объявление", "Maksas sludinājums"],

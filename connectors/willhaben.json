@@ -2,16 +2,16 @@
   "format": 1,
   "id": "willhaben",
   "name": "willhaben.at",
-  "version": "2026.11.18",
+  "version": "2026.11.21.1",
   "sites": {
-    "willhaben": {"name": "willhaben.at", "ads": ["^/iad/kaufen-und-verkaufen/d/[^/]+-[0-9]+/?$"], "origins": ["https://www.willhaben.at", "https://willhaben.at"], "start": "https://www.willhaben.at/iad/anzeigenaufgabe/marktplatz?adTypeId=67&productId=67"}
+    "willhaben": {"name": "willhaben.at", "currency": "EUR", "ads": ["^/iad/kaufen-und-verkaufen/d/[^/]+-[0-9]+/?$"], "origins": ["https://www.willhaben.at", "https://willhaben.at"], "start": "https://www.willhaben.at/iad/anzeigenaufgabe/marktplatz?adTypeId=67&productId=67"}
   },
   "inputs": {
     "title": {"label": "Title (Titel)", "required": true},
     "category": {"label": "Category", "hint": "Path as in the category window, e.g. Sport / Sportgeräte > Wintersport > Schifahren > Schi.", "required": true},
     "condition": {"label": "Condition (Zustand)", "hint": "new, like new, used, defect (Neu / Neuwertig / Gebraucht / Defekt)."},
     "length": {"label": "Ski length (Länge)", "hint": "In cm, e.g. 172: the matching range (170 - 179 cm) is chosen. Only for skis."},
-    "price": {"label": "Price (EUR)", "hint": "0 or free: zu verschenken.", "required": true},
+    "price": {"label": "Price (EUR)", "hint": "0 or free: zu verschenken.", "required": true, "money": true},
     "description": {"label": "Description (Beschreibung)", "required": true},
     "postcode": {"label": "PLZ", "hint": "Needed if your account has none; the town is filled in by willhaben."},
     "photos": {"label": "Photos"},

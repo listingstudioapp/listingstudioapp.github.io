@@ -2,16 +2,16 @@
   "format": 1,
   "id": "sbazar",
   "name": "Sbazar.cz",
-  "version": "2026.11.18",
+  "version": "2026.11.21.1",
   "sites": {
-    "sbazar": {"name": "Sbazar.cz", "origins": ["https://www.sbazar.cz", "https://sbazar.cz"], "start": "https://www.sbazar.cz/nova-nabidka"}
+    "sbazar": {"name": "Sbazar.cz", "currency": "CZK", "origins": ["https://www.sbazar.cz", "https://sbazar.cz"], "start": "https://www.sbazar.cz/nova-nabidka"}
   },
   "limits": {"title": 50},
   "inputs": {
     "title": {"label": "Title (Název)", "hint": "Up to 50 characters.", "required": true},
     "category": {"label": "Category", "hint": "Path as in the category window, e.g. Sport > Zimní sporty > Lyže.", "required": true},
     "description": {"label": "Description (Popis)", "hint": "Up to 2000 characters.", "required": true},
-    "price": {"label": "Price (Kč)", "hint": "0 or free: the Zdarma box. Empty with price type negotiable: Dohodou."},
+    "price": {"label": "Price (Kč)", "hint": "0 or free: the Zdarma box. Empty with price type negotiable: Dohodou.", "money": true},
     "priceType": {"label": "Price type", "hint": "negotiable (Dohodou). Empty: a fixed price."},
     "place": {"label": "Place (Místo)", "hint": "Town as Sbazar suggests it, e.g. Brno or Ostrava. The first suggestion starting with it is chosen."},
     "phone": {"label": "Phone", "hint": "Only if it should differ from your Seznam account's."},

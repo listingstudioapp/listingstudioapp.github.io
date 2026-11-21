@@ -2,11 +2,11 @@
   "format": 1,
   "id": "wallapop",
   "name": "Wallapop (España)",
-  "version": "2026.11.20",
+  "version": "2026.11.21.1",
   "shadow": true,
   "settle": 700,
   "sites": {
-    "wallapop": {"name": "Wallapop", "ads": ["^/item/[^/]+-[0-9]+$"], "origins": ["https://es.wallapop.com"], "start": "https://es.wallapop.com/app/catalog/upload/consumer-goods"}
+    "wallapop": {"name": "Wallapop", "currency": "EUR", "ads": ["^/item/[^/]+-[0-9]+$"], "origins": ["https://es.wallapop.com"], "start": "https://es.wallapop.com/app/catalog/upload/consumer-goods"}
   },
   "limits": {"title": 50, "photos": 10},
   "inputs": {
@@ -15,7 +15,7 @@
     "category": {"label": "Category", "required": true, "hint": "Path as in Wallapop's list, e.g. Deporte y ocio > Montaña y esquí. If Wallapop suggests the last level, it is taken directly."},
     "description": {"label": "Description (Descripción)", "hint": "Up to 640 characters.", "required": true},
     "condition": {"label": "Condition (Estado)", "hint": "sealed, new, like new, used, ok, defect (Sin abrir … Lo ha dado todo)."},
-    "price": {"label": "Price (EUR)", "required": true},
+    "price": {"label": "Price (EUR)", "required": true, "money": true},
     "shipping": {"label": "Shipping", "hint": "yes or no (Wallapop envíos). Empty: left as it is."},
     "weight": {"label": "Parcel weight", "hint": "0-1, 1-2, 2-5, 5-10, 10-20 or 20-30 (kg)."}
   },

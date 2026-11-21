@@ -2,10 +2,10 @@
   "format": 1,
   "id": "marktplaats",
   "name": "Marktplaats / 2dehands",
-  "version": "2026.11.17",
+  "version": "2026.11.21.1",
   "sites": {
-    "marktplaats": {"name": "Marktplaats", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.marktplaats.nl", "https://marktplaats.nl"], "start": "https://www.marktplaats.nl/plaats"},
-    "2dehands": {"name": "2dehands", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.2dehands.be", "https://2dehands.be"], "start": "https://www.2dehands.be/plaats"}
+    "marktplaats": {"name": "Marktplaats", "currency": "EUR", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.marktplaats.nl", "https://marktplaats.nl"], "start": "https://www.marktplaats.nl/plaats"},
+    "2dehands": {"name": "2dehands", "currency": "EUR", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.2dehands.be", "https://2dehands.be"], "start": "https://www.2dehands.be/plaats"}
   },
   "limits": {"title": 60, "photos": 24},
   "inputs": {
@@ -17,7 +17,7 @@
     "carve": {"label": "Carve", "hint": "true to tick it."},
     "sizes": {"label": "Sizes / lengths", "hint": "Numbers, e.g. 150; 160. Picks the length range that covers all of them."},
     "brand": {"label": "Brand"},
-    "price": {"label": "Price (EUR)", "required": true},
+    "price": {"label": "Price (EUR)", "required": true, "money": true},
     "delivery": {"label": "Delivery", "hint": "pickup, shipping or both. Empty: shipping when a shipping cost is set, otherwise left to you."},
     "shipping": {"label": "Shipping cost (EUR)", "hint": "Your own shipping price. Empty: marketplace carriers are left as they are."},
     "buyerProtection": {"label": "Buyer protection", "hint": "true to switch it on."},

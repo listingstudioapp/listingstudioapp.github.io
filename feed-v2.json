@@ -1,0 +1,143 @@
+{
+    "format":  "listing-studio-feed",
+    "version":  1,
+    "connectors":  [
+                       {
+                           "id":  "bazos",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/bazos.json"
+                       },
+                       {
+                           "id":  "kleinanzeigen",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/kleinanzeigen.json"
+                       },
+                       {
+                           "id":  "leboncoin",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/leboncoin.json"
+                       },
+                       {
+                           "id":  "marktplaats",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/marktplaats.json"
+                       },
+                       {
+                           "id":  "sbazar",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/sbazar.json"
+                       },
+                       {
+                           "id":  "sslv",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/sslv.json"
+                       },
+                       {
+                           "id":  "tutti",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/tutti.json"
+                       },
+                       {
+                           "id":  "wallapop",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/wallapop.json"
+                       },
+                       {
+                           "id":  "willhaben",
+                           "version":  "2026.11.21.1",
+                           "file":  "connectors/willhaben.json"
+                       }
+                   ],
+    "templates":  [
+                      {
+                          "id":  "any-shop-2dehands",
+                          "name":  "2dehands (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-2dehands.json",
+                          "marketplace":  "marktplaats",
+                          "engine":  "0.30.0",
+                          "description":  "2dehands.be in Dutch: title with sizes (60 characters), description, price, brand, condition and photos read from any shop that publishes its product data. Category: 2dehands\u0027 suggestion, or set it in the template."
+                      },
+                      {
+                          "id":  "any-shop-anibis",
+                          "name":  "anibis.ch (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-anibis.json",
+                          "marketplace":  "tutti",
+                          "engine":  "0.30.0",
+                          "description":  "anibis.ch in French: title with sizes (60 characters), description, price in CHF, condition, a link to the product page and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-bazos",
+                          "name":  "Bazoš (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-bazos.json",
+                          "marketplace":  "bazos",
+                          "engine":  "0.30.0",
+                          "description":  "Bazoš.cz in Czech: title with sizes (60 characters), text, price and photos read from any shop that publishes its product data. Open the form in your section (e.g. sport.bazos.cz); set the category in the template, or choose it and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-kleinanzeigen",
+                          "name":  "Kleinanzeigen (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-kleinanzeigen.json",
+                          "marketplace":  "kleinanzeigen",
+                          "engine":  "0.30.0",
+                          "description":  "Kleinanzeigen.de in German: title with sizes (65 characters), description, price in whole euros, condition and photos read from any shop that publishes its product data. Category: Kleinanzeigen\u0027s first suggestion, or set it in the template."
+                      },
+                      {
+                          "id":  "any-shop-leboncoin",
+                          "name":  "leboncoin (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-leboncoin.json",
+                          "marketplace":  "leboncoin",
+                          "engine":  "0.30.0",
+                          "description":  "leboncoin.fr in French: title with sizes, description, price, brand, condition and photos read from any shop that publishes its product data. Category: one of leboncoin\u0027s suggestions after the title; set it in the template, or choose it on the form and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-marktplaats",
+                          "name":  "Marktplaats (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-marktplaats.json",
+                          "marketplace":  "marktplaats",
+                          "engine":  "0.30.0",
+                          "description":  "Marktplaats.nl in Dutch: title with sizes (60 characters), description, price, brand, condition and photos read from any shop that publishes its product data. Category: Marktplaats\u0027 suggestion, or set it in the template."
+                      },
+                      {
+                          "id":  "any-shop-sbazar",
+                          "name":  "Sbazar (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-sbazar.json",
+                          "marketplace":  "sbazar",
+                          "engine":  "0.30.0",
+                          "description":  "Sbazar.cz in Czech: title with sizes (50 characters), description (2000 characters), price and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-tutti",
+                          "name":  "tutti.ch (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-tutti.json",
+                          "marketplace":  "tutti",
+                          "engine":  "0.30.0",
+                          "description":  "tutti.ch in German: title with sizes (60 characters), description, price in CHF, condition, a link to the product page and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-wallapop",
+                          "name":  "Wallapop (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-wallapop.json",
+                          "marketplace":  "wallapop",
+                          "engine":  "0.30.0",
+                          "description":  "Wallapop (es.wallapop.com) in Spanish: title with sizes (50 characters), description (640 characters), price, condition and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again."
+                      },
+                      {
+                          "id":  "any-shop-willhaben",
+                          "name":  "willhaben (any shop)",
+                          "version":  "2026.11.21.0845",
+                          "file":  "templates/any-shop-willhaben.json",
+                          "marketplace":  "willhaben",
+                          "engine":  "0.30.0",
+                          "description":  "willhaben.at in German: title with sizes (50 characters), description, price, condition and photos read from any shop that publishes its product data. Set the category in the template, or choose it on the form and press Fill form again."
+                      }
+                  ]
+}

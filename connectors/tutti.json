@@ -2,10 +2,10 @@
   "format": 1,
   "id": "tutti",
   "name": "tutti.ch / anibis.ch",
-  "version": "2026.11.18",
+  "version": "2026.11.21.1",
   "sites": {
-    "tutti": {"name": "tutti.ch", "origins": ["https://www.tutti.ch", "https://tutti.ch"], "start": "https://www.tutti.ch/de/listings/new"},
-    "anibis": {"name": "anibis.ch", "origins": ["https://www.anibis.ch", "https://anibis.ch"], "start": "https://www.anibis.ch/fr/listings/new"}
+    "tutti": {"name": "tutti.ch", "currency": "CHF", "origins": ["https://www.tutti.ch", "https://tutti.ch"], "start": "https://www.tutti.ch/de/listings/new"},
+    "anibis": {"name": "anibis.ch", "currency": "CHF", "origins": ["https://www.anibis.ch", "https://anibis.ch"], "start": "https://www.anibis.ch/fr/listings/new"}
   },
   "limits": {"title": 60, "photos": 15},
   "inputs": {
@@ -13,7 +13,7 @@
     "category": {"label": "Category", "hint": "Path as in the site's category menu, e.g. Sport & Outdoor > Wintersport (anibis in French: Sport & Outdoor > Sports d'hiver).", "required": true},
     "condition": {"label": "Condition", "hint": "new, used or defective (Neu / Gebraucht / Defekt, Neuf / Occasion …)."},
     "delivery": {"label": "Delivery", "hint": "shipping (Versand verfügbar: Ja) or pickup (Nein). Empty: left as it is."},
-    "price": {"label": "Price (CHF)", "hint": "0 or free: the Gratis box is ticked instead.", "required": true},
+    "price": {"label": "Price (CHF)", "hint": "0 or free: the Gratis box is ticked instead.", "required": true, "money": true},
     "description": {"label": "Description", "hint": "Up to 4000 characters.", "required": true},
     "postcode": {"label": "Postcode (PLZ / NPA)", "hint": "Only if it should differ from your account's."},
     "link": {"label": "External link", "hint": "Optional link, e.g. to the product in your shop."},
