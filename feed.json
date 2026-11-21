@@ -28,6 +28,11 @@
                            "file":  "connectors/sbazar.json"
                        },
                        {
+                           "id":  "sslv",
+                           "version":  "2026.11.21",
+                           "file":  "connectors/sslv.json"
+                       },
+                       {
                            "id":  "tutti",
                            "version":  "2026.11.18",
                            "file":  "connectors/tutti.json"

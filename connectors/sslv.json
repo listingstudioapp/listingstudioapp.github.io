@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "id": "sslv",
+  "name": "SS.lv",
+  "version": "2026.11.21",
+  "engine": "0.30.0",
+  "sites": {
+    "ss-lv": {"name": "SS.lv", "ads": ["^/msg/"], "start": "https://www.ss.lv/ru/new/", "origins": ["https://www.ss.lv", "https://ss.lv"]}
+  },
+  "limits": {"brand": 14, "model": 14, "photos": 10},
+  "inputs": {
+    "category": {"label": "Category", "hint": "The path as SS.lv shows it, e.g. Отдых, увлечения > Спорт, активный отдых > Горные лыжи > Лыжи (on ss.lv/lv: Atpūta, vaļasprieki > Sports, aktīvā atpūta > Kalnu slēpošana > Slēpes). Leave empty if you open the category's own page yourself."},
+    "title": {"label": "Headline", "hint": "SS.lv has no title box: this becomes the first line of the ad text. No capital-letter words, no shop name, no “Распродажа” / “New”."},
+    "description": {"label": "Text", "hint": "Russian or Latvian (ss.lv/lv: Latvian only). No phone, e-mail or link in the text: SS.lv removes such ads.", "required": true},
+    "deal": {"label": "Deal type", "hint": "sale (default), give away, buy or other."},
+    "brand": {"label": "Manufacturer", "hint": "Up to 14 characters."},
+    "model": {"label": "Model", "hint": "Up to 14 characters."},
+    "year": {"label": "Year", "hint": "Four digits."},
+    "length": {"label": "Length", "hint": "A number, e.g. 160."},
+    "condition": {"label": "Condition", "hint": "new or used."},
+    "price": {"label": "Price", "hint": "In €, the final price."},
+    "photos": {"label": "Photos", "hint": "Up to 10. Photos of the item itself: SS.lv removes catalogue pictures and logos."}
+  },
+  "never": ["Продолжить >>", "Продолжить", "Turpināt >>", "Turpināt", "Платное объявление", "Maksas sludinājums"],
+  "tables": {
+    "deal": {
+      "sale":["Продаю", "Pārdodu"], "sell": ["Продаю", "Pārdodu"],
+      "give": ["Отдаю", "Atdodu"], "free": ["Отдаю", "Atdodu"],
+      "buy": ["Покупаю", "Pērku"], "other": ["Разное", "Dažādi"]
+    },
+    "condition": {
+      "new": ["нов.", "jaun."], "used": ["б/у", "lietota"],
+      "neu": ["нов.", "jaun."], "gebraucht": ["б/у", "lietota"],
+      "новый": ["нов.", "jaun."], "новые": ["нов.", "jaun."], "jauns": ["нов.", "jaun."],
+      "lietots": ["б/у", "lietota"]
+    }
+  },
+  "fields": {
+    "section": {"title": "Section", "widget": "radio", "locate": {"anywhere": true}, "value": {"$part": "category", "index": 0}},
+    "group": {"title": "Category", "widget": "radio", "wait": 4000, "locate": {"anywhere": true}, "value": {"$part": "category", "index": 1}},
+    "subcategory": {"title": "Subcategory", "widget": "choice", "skipEmpty": true, "wait": 4000, "locate": {"css": "select[name=cid_2]"}, "value": {"$part": "category", "index": 2}},
+    "subcategory2": {"title": "Subcategory (second list)", "widget": "choice", "skipEmpty": true, "wait": 4000, "locate": {"css": "select[name=cid_3]"}, "value": {"$part": "category", "index": 3}},
+    "deal": {
+      "title": "Deal type", "widget": "choice", "optional": true, "if": {"input": "deal"},
+      "locate": {"css": "select[name=sid]"},
+      "value": {"$lookup": "deal", "table": "deal", "default": {"$input": "deal"}}
+    },
+    "dealSale": {
+      "title": "Deal type", "widget": "choice", "optional": true, "if": {"not": {"input": "deal"}},
+      "locate": {"css": "select[name=sid]"}, "value": ["Продаю", "Pārdodu"]
+    },
+    "brand": {"title": "Manufacturer", "widget": "text", "optional": true, "if": {"input": "brand"}, "locate": {"labels": ["Производитель", "Ražotājs"]}, "value": {"$input": "brand"}},
+    "model": {"title": "Model", "widget": "text", "optional": true, "if": {"input": "model"}, "locate": {"labels": ["Модель", "Modelis"]}, "value": {"$input": "model"}},
+    "year": {"title": "Year", "widget": "text", "optional": true, "if": {"input": "year"}, "locate": {"labels": ["Год выпуска", "Izlaiduma gads"]}, "value": {"$input": "year"}},
+    "length": {"title": "Length", "widget": "text", "optional": true, "if": {"input": "length"}, "locate": {"labels": ["Длина", "Garums"]}, "value": {"$input": "length"}},
+    "condition": {
+      "title": "Condition", "widget": "choice", "optional": true, "if": {"input": "condition"},
+      "locate": {"labels": ["Состояние", "Stāvoklis"]},
+      "value": {"$lookup": "condition", "table": "condition", "default": {"$input": "condition"}}
+    },
+    "price": {"title": "Price", "widget": "money", "format": {"fraction": "auto"}, "optional": true, "if": {"input": "price"}, "locate": {"css": "input[name='opt[8]']"}, "value": {"$input": "price"}},
+    "description": {"title": "Text", "widget": "richtext", "locate": {"css": "#mtxt_field"}, "value": {"$join": [{"$input": "title"}, {"$input": "description"}]}},
+    "photos": {"title": "Photos", "widget": "upload", "optional": true, "locate": {"css": "#img_form_1"}, "value": {"$input": "photos"}}
+  },
+  "steps": [
+    {
+      "id": "category",
+      "when": {"any": [{"button": "Продолжить подачу объявления >>"}, {"button": "Turpināt sludinājuma iesniegšanu >>"}]},
+      "do": [
+        {"fill": ["section", "group", "subcategory", "subcategory2"]},
+        {"advance": "Продолжить подачу объявления >>", "to": "rules", "optional": true, "within": 300},
+        {"advance": "Turpināt sludinājuma iesniegšanu >>", "to": "rules"}
+      ]
+    },
+    {
+      "id": "rules",
+      "when": {"any": [{"button": "Платное объявление"}, {"button": "Maksas sludinājums"}]},
+      "pause": "SS.lv asks you to accept its rules and choose the kind of ad (a paid choice). Do that on the page; on the ad form, press Fill form again.",
+      "do": []
+    },
+    {
+      "id": "form",
+      "when": {"field": "description"},
+      "do": [
+        {"fill": ["deal", "dealSale", "brand", "model", "year", "length", "condition", "price", "description", "photos"]}
+      ]
+    }
+  ]
+}
