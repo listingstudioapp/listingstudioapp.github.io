@@ -2,7 +2,7 @@
   "format": 1,
   "id": "leboncoin",
   "name": "leboncoin.fr",
-  "version": "2026.11.21.1",
+  "version": "2026.11.25.2",
   "sites": {
     "leboncoin": {"name": "leboncoin", "currency": "EUR", "ads": ["^/ad/[^/]+/[0-9]+$"], "origins": ["https://www.leboncoin.fr", "https://leboncoin.fr"], "start": "https://www.leboncoin.fr/deposer-une-annonce"}
   },
@@ -31,7 +31,8 @@
     },
     "category": {
       "title": "Category", "widget": "radio", "verify": false, "wait": 4000,
-      "whenEmpty": "No category in the template: choose it on the page, then press Fill again.",
+      "empty": "No category in the template: choose it on the page, then press Fill form again. Or set Category in the template.",
+      "emptyUnless": {"heading": "Dites-nous en plus sur votre article"},
       "locate": {"anywhere": true},
       "match": {"equals": {"$part": "category", "index": -1}}
     },
@@ -71,11 +72,14 @@
       "do": [
         {"fill": ["titleFirst", "category"]},
         {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 2500, "quiet": true},
-        {"click": "Continuer", "submit": true, "optional": true, "unless": {"heading": "Dites-nous en plus sur votre article"}, "until": {"heading": "Dites-nous en plus sur votre article"}},
-        {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 5000},
-        {"fill": ["photos", "universe", "activity", "product", "brand", "condition"]},
-        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000},
-        {"fill": ["title", "description", "sell", "give", "price", "place"]}
+        {"click": "Continuer", "submit": true, "optional": true, "unless": {"heading": "Dites-nous en plus sur votre article"}, "until": {"heading": "Dites-nous en plus sur votre article"},
+         "if": {"any": [{"input": "category"}, {"heading": "Dites-nous en plus sur votre article"}]}},
+        {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 5000,
+         "if": {"any": [{"input": "category"}, {"heading": "Dites-nous en plus sur votre article"}]}},
+        {"fill": ["photos", "universe", "activity", "product", "brand", "condition"], "if": {"heading": "Dites-nous en plus sur votre article"}},
+        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000,
+         "if": {"heading": "Dites-nous en plus sur votre article"}},
+        {"fill": ["title", "description", "sell", "give", "price", "place"], "if": {"heading": "Un dernier aperçu avant de publier votre annonce"}}
       ]
     },
     {

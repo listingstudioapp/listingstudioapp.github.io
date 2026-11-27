@@ -2,7 +2,7 @@
   "format": 1,
   "id": "tutti",
   "name": "tutti.ch / anibis.ch",
-  "version": "2026.11.21.1",
+  "version": "2026.11.25.1",
   "sites": {
     "tutti": {"name": "tutti.ch", "currency": "CHF", "origins": ["https://www.tutti.ch", "https://tutti.ch"], "start": "https://www.tutti.ch/de/listings/new"},
     "anibis": {"name": "anibis.ch", "currency": "CHF", "origins": ["https://www.anibis.ch", "https://anibis.ch"], "start": "https://www.anibis.ch/fr/listings/new"}
@@ -35,7 +35,9 @@
     "category": {
       "title": "Category", "widget": "dialog", "path": true, "menu": true,
       "locate": {"near": ["Kategorie", "Catégorie", "Categoria"]},
-      "value": {"$input": "category"}
+      "value": {"$input": "category"},
+      "empty": "No category in the template: choose it on the form (the other fields appear after it), then press Fill form again. Or set Category in the template.",
+      "emptyUnless": {"field": "title"}
     },
     "title": {
       "title": "Title", "widget": "text", "value": {"$input": "title"},
@@ -86,7 +88,7 @@
       "when": {"field": "category"},
       "do": [
         {"fill": ["category"]},
-        {"fill": ["title", "condition", "delivery", "free", "paid", "price", "description", "postcode", "link", "photos"]}
+        {"fill": ["title", "condition", "delivery", "free", "paid", "price", "description", "postcode", "link", "photos"], "if": {"field": "title"}}
       ]
     }
   ]

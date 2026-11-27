@@ -9,17 +9,17 @@
                        },
                        {
                            "id":  "kleinanzeigen",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.25.2",
                            "file":  "connectors/kleinanzeigen.json"
                        },
                        {
                            "id":  "leboncoin",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.25.2",
                            "file":  "connectors/leboncoin.json"
                        },
                        {
                            "id":  "marktplaats",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.25.1",
                            "file":  "connectors/marktplaats.json"
                        },
                        {
@@ -34,12 +34,12 @@
                        },
                        {
                            "id":  "tutti",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.25.1",
                            "file":  "connectors/tutti.json"
                        },
                        {
                            "id":  "wallapop",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.25.1",
                            "file":  "connectors/wallapop.json"
                        },
                        {

@@ -2,7 +2,7 @@
   "format": 1,
   "id": "marktplaats",
   "name": "Marktplaats / 2dehands",
-  "version": "2026.11.21.1",
+  "version": "2026.11.25.1",
   "sites": {
     "marktplaats": {"name": "Marktplaats", "currency": "EUR", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.marktplaats.nl", "https://marktplaats.nl"], "start": "https://www.marktplaats.nl/plaats"},
     "2dehands": {"name": "2dehands", "currency": "EUR", "ads": ["^/v/[^/]+/[^/]+/[am][0-9]+"], "origins": ["https://www.2dehands.be", "https://2dehands.be"], "start": "https://www.2dehands.be/plaats"}
@@ -137,7 +137,8 @@
     "2dehands": {
       "fields": {
         "selfShipping": {"widget": "radio", "locate": {"group": ["Transporteur"]}, "match": {"equals": "Zelf versturen"}},
-        "sort": {"value": {"$lookup": "sort", "table": "sort2dehands", "default": {"$input": "sort"}}}
+        "sort": {"value": {"$lookup": "sort", "table": "sort2dehands", "default": {"$input": "sort"}}},
+        "category": {"whenEmpty": "No category in the template: the category 2dehands suggested is used. Check it, or set Category in the template."}
       }
     }
   },

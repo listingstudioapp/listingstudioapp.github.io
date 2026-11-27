@@ -2,7 +2,7 @@
   "format": 1,
   "id": "kleinanzeigen",
   "name": "Kleinanzeigen",
-  "version": "2026.11.21.1",
+  "version": "2026.11.25.2",
   "sites": {
     "kleinanzeigen": {"name": "Kleinanzeigen", "currency": "EUR", "ads": ["^/s-anzeige/[^/:]+/[0-9]+-[0-9]+-[0-9]+"], "origins": ["https://www.kleinanzeigen.de", "https://kleinanzeigen.de"], "start": "https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html"}
   },
@@ -38,11 +38,12 @@
       "locate": {"anywhere": true},
       "match": {"pathEndsWith": {"$input": "category"}}
     },
-    "categoryAuto": {
+    "category": {
       "title": "Category", "widget": "toggle", "optional": true, "wait": 6000,
       "if": {"not": {"input": "category"}},
       "locate": {"css": "input[name=category-suggestions]", "first": true}, "value": true,
-      "note": "No category in the template: Kleinanzeigen's first suggestion is used. Check it, or set Category in the template."
+      "note": "No category in the template: Kleinanzeigen's first suggestion is used. Check it, or set Category in the template.",
+      "missing": "No category in the template, and Kleinanzeigen suggested none for this title: choose it on the form (Wählen Sie Ihre Kategorie), or set Category in the template."
     },
     "categoryTree": {
       "title": "Category", "widget": "dialog", "path": true,
@@ -108,7 +109,7 @@
       "id": "form",
       "when": {"all": [{"field": "title"}, {"field": "description"}]},
       "do": [
-        {"fill": ["title", "categorySuggestion", "categoryAuto", "categoryTree"]},
+        {"fill": ["title", "categorySuggestion", "category", "categoryTree"]},
         {"fill": ["type", "condition", "deliveryShipping", "deliveryPickup", "deliveryList"]},
         {"fill": ["description", "price", "priceType", "warranty", "postcode", "photos"]},
         {"dismiss": [
