@@ -4,7 +4,7 @@
     "connectors":  [
                        {
                            "id":  "bazos",
-                           "version":  "2026.11.21.1",
+                           "version":  "2026.11.28.2",
                            "file":  "connectors/bazos.json"
                        },
                        {
@@ -14,12 +14,12 @@
                        },
                        {
                            "id":  "leboncoin",
-                           "version":  "2026.11.25.2",
+                           "version":  "2026.11.28.1",
                            "file":  "connectors/leboncoin.json"
                        },
                        {
                            "id":  "marktplaats",
-                           "version":  "2026.11.25.1",
+                           "version":  "2026.11.28.1",
                            "file":  "connectors/marktplaats.json"
                        },
                        {

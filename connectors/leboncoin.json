@@ -2,7 +2,7 @@
   "format": 1,
   "id": "leboncoin",
   "name": "leboncoin.fr",
-  "version": "2026.11.25.2",
+  "version": "2026.11.28.1",
   "sites": {
     "leboncoin": {"name": "leboncoin", "currency": "EUR", "ads": ["^/ad/[^/]+/[0-9]+$"], "origins": ["https://www.leboncoin.fr", "https://leboncoin.fr"], "start": "https://www.leboncoin.fr/deposer-une-annonce"}
   },
@@ -77,7 +77,7 @@
         {"wait": {"heading": "Dites-nous en plus sur votre article"}, "timeout": 5000,
          "if": {"any": [{"input": "category"}, {"heading": "Dites-nous en plus sur votre article"}]}},
         {"fill": ["photos", "universe", "activity", "product", "brand", "condition"], "if": {"heading": "Dites-nous en plus sur votre article"}},
-        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000,
+        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 20000,
          "if": {"heading": "Dites-nous en plus sur votre article"}},
         {"fill": ["title", "description", "sell", "give", "price", "place"], "if": {"heading": "Un dernier aperçu avant de publier votre annonce"}}
       ]
@@ -87,7 +87,7 @@
       "when": {"heading": "Dites-nous en plus sur votre article"},
       "do": [
         {"fill": ["photos", "universe", "activity", "product", "brand", "condition"]},
-        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 6000},
+        {"click": "Continuer", "submit": true, "within": 8000, "until": {"heading": "Un dernier aperçu avant de publier votre annonce"}, "timeout": 20000},
         {"fill": ["title", "description", "sell", "give", "price", "place"]}
       ]
     },
